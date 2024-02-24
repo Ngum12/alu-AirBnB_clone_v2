@@ -1,32 +1,30 @@
 #!/usr/bin/python3
-"""Starts a Flask web application"""
+"""
+starts a Flask web application
+"""
 
 from flask import Flask, render_template
+from models import *
 from models import storage
-
 app = Flask(__name__)
 
 
-@app.route('/hbnb_filters', strict_slashes=False)
-def hbnb_filters():
-    """display an hbnb template"""
-    states = sorted(storage.all("State").values(),
-                    key=lambda state: state.name)
-    cities = sorted(storage.all("City").values(),
-                    key = lambda city: city.name)
-    amenities = sorted(storage.all("Amenity").values(),
-                       key = lambda amenity: amenity.name)
-    return render_template('10-hbnb_filters.html',
-                           states=states,
-                           cities=cities,
-                           amenities=amenities)
+@app.route('/states', strict_slashes=False)
+@app.route('/states/<state_id>', strict_slashes=False)
+def states(state_id=None):
+    """display the states and cities listed in alphabetical order"""
+    states = storage.all("State")
+    if state_id is not None:
+        state_id = 'State.' + state_id
+    return render_template('9-states.html', states=states, state_id=state_id)
 
 
 @app.teardown_appcontext
 def teardown_db(exception):
-    """remove the current SQLAlchemy session"""
+    """closes the storage on teardown"""
     storage.close()
 
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000)
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port='5000')
+
 
