@@ -9,26 +9,32 @@ app = Flask(__name__)
 
 
 @app.teardown_appcontext
-def close(self):
+def close_storage(exception):
     """ Method to close the session """
     storage.close()
 
 
 @app.route('/states', strict_slashes=False)
 def state():
-    """Displays a html page with states"""
+    """Displays an HTML page with states"""
     states = storage.all(State)
     return render_template('9-states.html', states=states, mode='all')
 
 
 @app.route('/states/<id>', strict_slashes=False)
 def state_by_id(id):
-    """Displays a html page with citys of that state"""
+    """Displays an HTML page with cities of that state"""
+    requested_state = None
     for state in storage.all(State).values():
         if state.id == id:
-            return render_template('9-states.html', states=state, mode='id')
-    return render_template('9-states.html', states=state, mode='none')
+            requested_state = state
+            break
+    if requested_state:
+        return render_template('9-states.html', states=requested_state, mode='id')
+    else:
+        return render_template('9-states.html', states=None, mode='none')
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port="5000")
+    app.run(host="0.0.0.0", port=5000)
+
