@@ -14,7 +14,7 @@ def close_storage(exception):
 def get_states():
     try:
         states = storage.all(State)
-        return render_template('states.html', states=states)
+        return render_template('9-states.html', states=states, mode='all')
     except Exception as e:
         app.logger.error('An error occurred: {}'.format(str(e)))
         abort(500)
@@ -24,7 +24,7 @@ def get_state_by_id(id):
     try:
         state = storage.get(State, id)
         if state:
-            return render_template('state.html', state=state)
+            return render_template('9-states.html', states=state, mode='id')
         else:
             abort(404)
     except Exception as e:
