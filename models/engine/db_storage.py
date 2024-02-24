@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """This is the file storage class for AirBnB"""
 
+import models
 from models.base_model import Base
 from models.user import User
 from models.state import State
