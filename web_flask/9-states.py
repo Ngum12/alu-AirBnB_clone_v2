@@ -1,9 +1,4 @@
 #!/usr/bin/python3
-
-import sys
-sys.path.append('/home/Ngum12/alu-AirBnB_clone_v2')
-from models import *
-
 """ Write a script that starts a Flask web application,
 Web application is listening on 0.0.0.0, port 5000 """
 
