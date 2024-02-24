@@ -1,4 +1,19 @@
 #!/usr/bin/python3
+
+
+import os
+import sys  # Import the sys module
+
+# Get the directory path of the current script
+current_directory = os.path.dirname(os.path.realpath(__file__))
+
+# Append the directory containing the 'models' module to the Python path
+models_directory = os.path.join(current_directory, 'models')
+sys.path.append(models_directory)
+
+# Now you can continue with the rest of your script
+# ...
+
 """Importing Flask to run the web app"""
 from flask import Flask, render_template
 from models import storage
